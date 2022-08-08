@@ -1,7 +1,7 @@
- # 作者:明月清风我
+# 作者:明月清风我
 # 时间:2022/7/15 20:10
 import json
-from pandas import Series, DataFrame
+from pandas import DataFrame
 
 
 class SourceData:

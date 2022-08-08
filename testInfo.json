@@ -6,7 +6,7 @@
             "unit": "op",
             "batch": 1,
             "complexityN": -1,
-            "epochs": 11,
+            "epochs": 1,
             "clockResolution": 9.08e-07,
             "clockResolutionMultiple": 1000,
             "maxEpochTime": 0.1,
