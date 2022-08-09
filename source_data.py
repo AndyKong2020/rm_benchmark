@@ -10,28 +10,16 @@ class SourceData:
         self.path = path
 
 
-class SourceDataResults(SourceData):
-    result_dict = {}
+class SourceDataLabel(SourceData):
+    label_dict = {}
 
     def __init__(self, path):
         super().__init__(path)
         self.path = path
 
-        result = Path(self.path)
-        for each in result.iterdir():
-            self.result_dict[each.name] = each
-
-
-class SourceDataDataset(SourceData):
-    dataset_dict = {}
-
-    def __init__(self, path):
-        super().__init__(path)
-        self.path = path
-
-        dataset = Path(self.path)
-        for each in dataset.iterdir():
-            self.dataset_dict[each.name] = each
+        label = Path(self.path)
+        for each in label.iterdir():
+            self.label_dict[each.name] = each
 
 
 class SourceDataSerial(SourceData):
@@ -46,11 +34,11 @@ class SourceDataJson(SourceData):
         return result
 
 
-class DataObject:
+class JsonObject:
+    measurements_dataframe = DataFrame()
+
     def __init__(self, data):
         self.measurements = None
         for i in data:
             self.__dict__[i] = data[i]
-
-    def measurements_panel(self):
-        return DataFrame(self.measurements)
+        self.measurements_dataframe = DataFrame(self.measurements)
