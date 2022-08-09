@@ -4,7 +4,7 @@ import pandas as pd
 import source_data
 import data_analyzer
 
-path = "testInfo.json"
+path = "labels"
 
 
 def main():
@@ -13,14 +13,8 @@ def main():
         dict_data = data.deserialize()
         print(dict_data)
     except:
-        data = source_data.SourceDataJson(path)
-        dict_data = data.json_to_dict()
-        print(dict_data)
-        d = source_data.DataObject(dict_data)
-        print(d.measurements_panel())
-        df = d.measurements_panel()
-        mp = data_analyzer.MeasurementsProcessor(df)
-        print(mp.iterations_sum())
+        s = source_data.SourceDataDataset(path)
+        print(s.dataset_dict)
 
 
 if __name__ == '__main__':

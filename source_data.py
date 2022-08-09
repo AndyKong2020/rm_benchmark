@@ -2,11 +2,36 @@
 # 时间:2022/7/15 20:10
 import json
 from pandas import DataFrame
+from pathlib import Path
 
 
 class SourceData:
     def __init__(self, path):
         self.path = path
+
+
+class SourceDataResults(SourceData):
+    result_dict = {}
+
+    def __init__(self, path):
+        super().__init__(path)
+        self.path = path
+
+        result = Path(self.path)
+        for each in result.iterdir():
+            self.result_dict[each.name] = each
+
+
+class SourceDataDataset(SourceData):
+    dataset_dict = {}
+
+    def __init__(self, path):
+        super().__init__(path)
+        self.path = path
+
+        dataset = Path(self.path)
+        for each in dataset.iterdir():
+            self.dataset_dict[each.name] = each
 
 
 class SourceDataSerial(SourceData):
