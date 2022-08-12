@@ -13,9 +13,9 @@ def main():
         dict_data = data.deserialize()
         print(dict_data)
     except:
-        # dataset = source_data.SourceDataLabel("labels")
-        # results = source_data.SourceDataLabel("results")
-        process = data_analyzer.ResultsAnalyzer("labels", "results")
+        dataset = source_data.SourceDataLabel("dataset")
+        results = source_data.SourceDataLabel("results")
+        process = data_analyzer.ResultsAnalyzer(dataset.label_dict, results.label_dict)
         process.result_error()
 
 
