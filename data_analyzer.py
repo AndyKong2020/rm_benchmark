@@ -1,8 +1,5 @@
 # 作者:明月清风我
 # 时间:2022/7/15 21:17
-import pandas as pd
-from pandas import Series, DataFrame
-from pathlib import Path
 import numpy as np
 from shapely.geometry import Polygon
 
@@ -26,11 +23,15 @@ class ResultsAnalyzer:
     result_not_found = 0
 
     def __init__(self, dataset_path, results_path):
-        self.dataset_path = dataset_path
-        self.results_path = results_path
-        self.dataset = source_data.SourceDataLabel(dataset_path).label_dict
-        self.results = source_data.SourceDataLabel(results_path).label_dict
-        print(self.dataset)
+        # self.dataset_path = dataset_path
+        # self.results_path = results_path
+        # self.dataset_object = source_data.SourceDataLabel(self.dataset_path)
+        # self.results_object = source_data.SourceDataLabel(self.results_path)
+        # self.dataset = self.dataset_object.label_dict
+        # self.results = self.results_object.label_dict
+        self.dataset = dataset_path
+        self.results = results_path
+        print(self.dataset, self.results)
 
     def result_error(self):
         self.result_not_found = 0
