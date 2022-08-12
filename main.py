@@ -14,7 +14,7 @@ def main():
         print(dict_data)
     except:
         dataset = source_data.SourceDataLabel("dataset")
-        #print(dataset.label_dict)
+        print(dataset.label_dict)
         results = source_data.SourceDataLabel("results")
         print(dataset.label_dict)
         process = data_analyzer.ResultsAnalyzer(dataset.label_dict, results.label_dict)
