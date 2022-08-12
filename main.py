@@ -13,8 +13,8 @@ def main():
         dict_data = data.deserialize()
         print(dict_data)
     except:
-        # dataset = source_data.SourceDataLabel("labels")
-        # results = source_data.SourceDataLabel("results")
+        dataset = source_data.SourceDataLabel("labels")
+        results = source_data.SourceDataLabel("results")
         process = data_analyzer.ResultsAnalyzer("labels", "results")
         process.result_error()
 
