@@ -13,8 +13,10 @@ def main():
         dict_data = data.deserialize()
         print(dict_data)
     except:
-        s = source_data.SourceDataDataset(path)
-        print(s.dataset_dict)
+        # dataset = source_data.SourceDataLabel("labels")
+        # results = source_data.SourceDataLabel("results")
+        process = data_analyzer.ResultsAnalyzer("labels", "results")
+        process.result_error()
 
 
 if __name__ == '__main__':
