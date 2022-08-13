@@ -137,3 +137,15 @@ class DataAnalyzer:
 
     def picture_avg(self):
         return statistics.mean(self.accuracy_per_picture)
+
+    def target_median(self):
+        return statistics.median(self.accuracy_per_target)
+
+    def picture_median(self):
+        return statistics.median(self.accuracy_per_picture)
+
+    def target_quantiles(self):
+        return statistics.quantiles(self.accuracy_per_target)
+
+    def picture_quantiles(self):
+        return statistics.quantiles(self.accuracy_per_picture)
