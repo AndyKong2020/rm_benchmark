@@ -3,6 +3,7 @@
 import numpy as np
 from shapely.geometry import Polygon
 import statistics
+import numba as nb
 
 import source_data
 
@@ -32,7 +33,7 @@ class ResultsProcessor:
         # self.results = self.results_object.label_dict
         self.dataset = dataset_path
         self.results = results_path
-        print(self.dataset, self.results)
+        # print(self.dataset, self.results)
 
     def result_error(self):
         self.result_not_found = 0
@@ -55,10 +56,10 @@ class ResultsProcessor:
         for dataset_path_key in self.dataset.keys():
             dataset_path = self.dataset[dataset_path_key]
             results_path = self.results[dataset_path_key]
-            print(dataset_path, results_path)
+            # print(dataset_path, results_path)
             if results_path is None:
                 self.result_not_found += 1
-                print(self.result_not_found, 'rnf')
+                # print(self.result_not_found, 'rnf')
                 continue
             with open(dataset_path, "r") as file:
                 dataset_coords = file.readlines()
@@ -78,16 +79,16 @@ class ResultsProcessor:
                                              list(map(float, results_coords[index].split()[7:9]))]
             detect_num_error[dataset_path_key] = len(results_coords) - len(dataset_coords)
             detect_coord_error[dataset_path_key] = []
-            print(type(results_coords[0][0][0]))
+            # print(type(results_coords[0][0][0]))
             inf = [[list(map(float, ['inf', 'inf'])),
                     list(map(float, ['inf', 'inf'])),
                     list(map(float, ['inf', 'inf'])),
                     list(map(float, ['inf', 'inf']))]]
-            print('flag1')
+            # print('flag1')
             if (dataset_coords == inf) and (results_coords == inf):
-                print('flag2')
+                # print('flag2')
                 detect_coord_error[dataset_path_key].append(1.0)
-                print('continue')
+                # print('continue')
                 continue
             elif (dataset_coords == inf) and (results_coords != inf):
                 detect_coord_error[dataset_path_key].append(0.0)
@@ -96,24 +97,24 @@ class ResultsProcessor:
                 detect_coord_error[dataset_path_key].append(0.0)
                 continue
             compare_array = np.zeros([len(results_coords), len(dataset_coords)])
-            print(compare_array, len(results_coords), len(dataset_coords))
+            # print(compare_array, len(results_coords), len(dataset_coords))
             for row in range(len(results_coords)):
                 for column in range(len(dataset_coords)):
                     compare_array[row, column] = distance(results_coords[row], dataset_coords[column])
             match = []
-            flag = 0
-            print(compare_array, 'a')
+            # flag = 0
+            # print(compare_array, 'a')
             while compare_array.min() != 2:
                 min_index_tuple = divmod(np.argmin(compare_array), compare_array.shape[1])
-                print(min_index_tuple)
+                # print(min_index_tuple)
                 match.append(min_index_tuple)
                 compare_array[min_index_tuple[0], :] = 2
                 compare_array[:, min_index_tuple[1]] = 2
-                flag += 1
-                print(flag)
-                print(compare_array)
+                # flag += 1
+                # print(flag)
+                # print(compare_array)
             for index_tuple in match:
-                print(dataset_coords[index_tuple[1]])
+                # print(dataset_coords[index_tuple[1]])
                 cover_rate = cal_area_2poly(results_coords[index_tuple[0]], dataset_coords[index_tuple[1]]) / \
                              Polygon(dataset_coords[index_tuple[1]]).convex_hull.area
                 detect_coord_error[dataset_path_key].append(cover_rate)
@@ -123,11 +124,11 @@ class ResultsProcessor:
 
 class DataAnalyzer:
     def __init__(self, compare_dict):
-        print(compare_dict)
+        # print(compare_dict)
         self.compare_dict = compare_dict
         self.accuracy_per_target = []
         self.accuracy_per_picture = []
-        print(self.compare_dict.values())
+        # print(self.compare_dict.values())
         for value in self.compare_dict.values():
             self.accuracy_per_picture.append(statistics.mean(value))
             self.accuracy_per_target += value

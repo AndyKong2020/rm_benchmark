@@ -1,4 +1,8 @@
 import json
+import time
+import numba as nb
+from timeit import timeit
+
 import numpy as np
 import pandas as pd
 import source_data
@@ -22,4 +26,7 @@ def main():
 
 
 if __name__ == '__main__':
+    start = time.time()
     main()
+    end = time.time()
+    print(end - start)

@@ -11,11 +11,11 @@ class SourceData:
 
 
 class SourceDataLabel(SourceData):
-    label_dict = {}
 
     def __init__(self, path):
         super().__init__(path)
         self.path = path
+        self.label_dict = {}
 
         label = Path(self.path)
         for each in label.iterdir():
