@@ -17,7 +17,7 @@ class MeasurementsProcessor:
         pass
 
 
-class ResultsAnalyzer:
+class ResultsProcessor:
     dataset = {}
     results = {}
     result_not_found = 0
@@ -49,7 +49,7 @@ class ResultsAnalyzer:
 
         def distance(data1, data2):
             return ((sum(data1[0][:]) / 4 - sum(data2[0][:]) / 4) ** 2 + (
-                        sum(data1[1][:]) / 4 - sum(data2[1][:]) / 4) ** 2) ** 0.5
+                    sum(data1[1][:]) / 4 - sum(data2[1][:]) / 4) ** 2) ** 0.5
 
         for dataset_path_key in self.dataset.keys():
             dataset_path = self.dataset[dataset_path_key]
@@ -83,10 +83,16 @@ class ResultsAnalyzer:
                     list(map(float, ['inf', 'inf'])),
                     list(map(float, ['inf', 'inf']))]]
             print('flag1')
-            if (dataset_coords == inf) or (results_coords == inf):
+            if (dataset_coords == inf) and (results_coords == inf):
                 print('flag2')
-                detect_coord_error[dataset_path_key].append('nan')
+                detect_coord_error[dataset_path_key].append(1)
                 print('continue')
+                continue
+            elif (dataset_coords == inf) and (results_coords != inf):
+                detect_coord_error[dataset_path_key].append(0)
+                continue
+            elif (dataset_coords != inf) and (results_coords == inf):
+                detect_coord_error[dataset_path_key].append(0)
                 continue
             compare_array = np.zeros([len(results_coords), len(dataset_coords)])
             print(compare_array, len(results_coords), len(dataset_coords))
@@ -111,3 +117,19 @@ class ResultsAnalyzer:
                              Polygon(dataset_coords[index_tuple[1]]).convex_hull.area
                 detect_coord_error[dataset_path_key].append(cover_rate)
         print(detect_coord_error)
+
+
+class DataAnalyzer:
+    def __init__(self, compare_dict):
+        self.compare_dict = compare_dict
+        self.accuracy_per_target = []
+        for value in self.compare_dict.values:
+            self.accuracy_per_target += value
+        self.accuracy_per_picture = []
+        for value in self.compare_dict.values:
+            self.accuracy_per_picture += value
+
+    def target_avg(self):
+        accuracy_per_target = []
+        for value in self.compare_dict.values:
+            accuracy_per_target += value
