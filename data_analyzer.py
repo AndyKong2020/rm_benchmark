@@ -1,11 +1,9 @@
 # 作者:明月清风我
 # 时间:2022/7/15 21:17
+import statistics
+
 import numpy as np
 from shapely.geometry import Polygon
-import statistics
-import numba as nb
-
-import source_data
 
 
 class MeasurementsProcessor:
@@ -150,3 +148,27 @@ class DataAnalyzer:
 
     def picture_quantiles(self):
         return statistics.quantiles(self.accuracy_per_picture)
+
+    def target_pstdev(self):
+        return statistics.pstdev(self.accuracy_per_target)
+
+    def picture_pstdev(self):
+        return statistics.pstdev(self.accuracy_per_picture)
+
+    def target_pvariance(self):
+        return statistics.pvariance(self.accuracy_per_target)
+
+    def picture_pvariance(self):
+        return statistics.pvariance(self.accuracy_per_picture)
+
+    def target_stdev(self):
+        return statistics.stdev(self.accuracy_per_target)
+
+    def picture_stdev(self):
+        return statistics.stdev(self.accuracy_per_picture)
+
+    def target_variance(self):
+        return statistics.variance(self.accuracy_per_target)
+
+    def picture_variance(self):
+        return statistics.variance(self.accuracy_per_picture)

@@ -1,12 +1,7 @@
-import json
 import time
-import numba as nb
-from timeit import timeit
 
-import numpy as np
-import pandas as pd
-import source_data
 import data_analyzer
+import source_data
 
 path = "labels"
 
@@ -22,7 +17,21 @@ def main():
         process = data_analyzer.ResultsProcessor(dataset.label_dict, results.label_dict)
         result_error_dict = process.result_error()
         analyzer = data_analyzer.DataAnalyzer(result_error_dict)
-        print(analyzer.picture_avg(), analyzer.target_avg())
+        print('picture_avg', analyzer.picture_avg(), '\t',
+              'target_avg', analyzer.target_avg(), '\n',
+              'picture_median', analyzer.picture_median(), '\t',
+              'target_median', analyzer.target_median(), '\n',
+              'picture_quantiles', analyzer.picture_quantiles(), '\t',
+              'target_quantiles', analyzer.target_quantiles(), '\n',
+              'picture_pstdev', analyzer.picture_pstdev(), '\t',
+              'target_pstdev', analyzer.target_pstdev(), '\n',
+              'picture_pvariance', analyzer.picture_pvariance(), '\t',
+              'target_pvariance', analyzer.target_pvariance(), '\n',
+              'picture_stdev', analyzer.picture_stdev(), '\t',
+              'target_stdev', analyzer.target_stdev(), '\n',
+              'picture_variance', analyzer.picture_variance(), '\t',
+              'target_variance', analyzer.target_variance(), '\n',
+              )
 
 
 if __name__ == '__main__':
