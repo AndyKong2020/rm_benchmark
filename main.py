@@ -17,7 +17,7 @@ def main():
         process = data_analyzer.ResultsProcessor(dataset.label_dict, results.label_dict)
         result_error_dict = process.result_error()
         analyzer = data_analyzer.DataAnalyzer(result_error_dict)
-        print('picture_avg', analyzer.picture_avg(), '\t',
+        print(' picture_avg', analyzer.picture_avg(), '\t',
               'target_avg', analyzer.target_avg(), '\n',
               'picture_median', analyzer.picture_median(), '\t',
               'target_median', analyzer.target_median(), '\n',
