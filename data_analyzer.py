@@ -84,7 +84,8 @@ class ResultsAnalyzer:
             flag = 0
             print(compare_array, 'a')
             while compare_array.min() != 2:
-                min_index_tuple = divmod(np.argmax(compare_array), compare_array.shape[1])
+                min_index_tuple = divmod(np.argmin(compare_array), compare_array.shape[1])
+                print(min_index_tuple)
                 match.append(min_index_tuple)
                 compare_array[min_index_tuple[0], :] = 2
                 compare_array[:, min_index_tuple[1]] = 2
