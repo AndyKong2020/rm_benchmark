@@ -16,7 +16,9 @@ def main():
         dataset = source_data.SourceDataLabel("dataset")
         results = source_data.SourceDataLabel("results")
         process = data_analyzer.ResultsProcessor(dataset.label_dict, results.label_dict)
-        process.result_error()
+        result_error_dict = process.result_error()
+        analyzer = data_analyzer.DataAnalyzer(result_error_dict)
+        print(analyzer.picture_avg(), analyzer.target_avg())
 
 
 if __name__ == '__main__':
