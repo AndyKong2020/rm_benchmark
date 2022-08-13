@@ -117,18 +117,20 @@ class ResultsProcessor:
                 cover_rate = cal_area_2poly(results_coords[index_tuple[0]], dataset_coords[index_tuple[1]]) / \
                              Polygon(dataset_coords[index_tuple[1]]).convex_hull.area
                 detect_coord_error[dataset_path_key].append(cover_rate)
-        print(detect_coord_error)
+        # print(detect_coord_error)
+        return detect_coord_error
 
 
 class DataAnalyzer:
     def __init__(self, compare_dict):
+        print(compare_dict)
         self.compare_dict = compare_dict
         self.accuracy_per_target = []
-        for value in self.compare_dict.values:
-            self.accuracy_per_target += value
         self.accuracy_per_picture = []
-        for value in self.compare_dict.values:
+        print(self.compare_dict.values())
+        for value in self.compare_dict.values():
             self.accuracy_per_picture.append(statistics.mean(value))
+            self.accuracy_per_target += value
 
     def target_avg(self):
         return statistics.mean(self.accuracy_per_target)
