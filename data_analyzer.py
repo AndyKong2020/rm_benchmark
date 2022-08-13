@@ -2,6 +2,7 @@
 # 时间:2022/7/15 21:17
 import numpy as np
 from shapely.geometry import Polygon
+import statistics
 
 import source_data
 
@@ -85,14 +86,14 @@ class ResultsProcessor:
             print('flag1')
             if (dataset_coords == inf) and (results_coords == inf):
                 print('flag2')
-                detect_coord_error[dataset_path_key].append(1)
+                detect_coord_error[dataset_path_key].append(1.0)
                 print('continue')
                 continue
             elif (dataset_coords == inf) and (results_coords != inf):
-                detect_coord_error[dataset_path_key].append(0)
+                detect_coord_error[dataset_path_key].append(0.0)
                 continue
             elif (dataset_coords != inf) and (results_coords == inf):
-                detect_coord_error[dataset_path_key].append(0)
+                detect_coord_error[dataset_path_key].append(0.0)
                 continue
             compare_array = np.zeros([len(results_coords), len(dataset_coords)])
             print(compare_array, len(results_coords), len(dataset_coords))
@@ -127,9 +128,10 @@ class DataAnalyzer:
             self.accuracy_per_target += value
         self.accuracy_per_picture = []
         for value in self.compare_dict.values:
-            self.accuracy_per_picture += value
+            self.accuracy_per_picture.append(statistics.mean(value))
 
     def target_avg(self):
-        accuracy_per_target = []
-        for value in self.compare_dict.values:
-            accuracy_per_target += value
+        return statistics.mean(self.accuracy_per_target)
+
+    def picture_avg(self):
+        return statistics.mean(self.accuracy_per_picture)
