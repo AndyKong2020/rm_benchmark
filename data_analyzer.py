@@ -48,7 +48,8 @@ class ResultsAnalyzer:
             return inter_area
 
         def distance(data1, data2):
-            return ((sum(data1[0][:])/4 - sum(data2[0][:])/4)**2 + (sum(data1[1][:])/4 - sum(data2[1][:])/4)**2)**0.5
+            return ((sum(data1[0][:]) / 4 - sum(data2[0][:]) / 4) ** 2 + (
+                        sum(data1[1][:]) / 4 - sum(data2[1][:]) / 4) ** 2) ** 0.5
 
         for dataset_path_key in self.dataset.keys():
             dataset_path = self.dataset[dataset_path_key]
@@ -75,6 +76,18 @@ class ResultsAnalyzer:
                                              list(map(float, results_coords[index].split()[5:7])),
                                              list(map(float, results_coords[index].split()[7:9]))]
             detect_num_error[dataset_path_key] = len(results_coords) - len(dataset_coords)
+            detect_coord_error[dataset_path_key] = []
+            print(type(results_coords[0][0][0]))
+            inf = [[list(map(float, ['inf', 'inf'])),
+                    list(map(float, ['inf', 'inf'])),
+                    list(map(float, ['inf', 'inf'])),
+                    list(map(float, ['inf', 'inf']))]]
+            print('flag1')
+            if (dataset_coords == inf) or (results_coords == inf):
+                print('flag2')
+                detect_coord_error[dataset_path_key].append('nan')
+                print('continue')
+                continue
             compare_array = np.zeros([len(results_coords), len(dataset_coords)])
             print(compare_array, len(results_coords), len(dataset_coords))
             for row in range(len(results_coords)):
@@ -92,9 +105,9 @@ class ResultsAnalyzer:
                 flag += 1
                 print(flag)
                 print(compare_array)
-            detect_coord_error[dataset_path_key] = []
             for index_tuple in match:
-                cover_rate = cal_area_2poly(results_coords[index_tuple[0]], dataset_coords[index_tuple[1]])/\
+                print(dataset_coords[index_tuple[1]])
+                cover_rate = cal_area_2poly(results_coords[index_tuple[0]], dataset_coords[index_tuple[1]]) / \
                              Polygon(dataset_coords[index_tuple[1]]).convex_hull.area
                 detect_coord_error[dataset_path_key].append(cover_rate)
         print(detect_coord_error)
