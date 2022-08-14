@@ -6,7 +6,7 @@ import numpy as np
 from shapely.geometry import Polygon
 
 
-class MeasurementsProcessor:
+class MeasurementsProcessor(object):
     def __init__(self, dataframe):
         self.dataframe = dataframe
 
@@ -17,7 +17,7 @@ class MeasurementsProcessor:
         pass
 
 
-class ResultsProcessor:
+class ResultsProcessor(object):
     dataset = {}
     results = {}
     result_not_found = 0
@@ -120,7 +120,7 @@ class ResultsProcessor:
         return detect_coord_error
 
 
-class DataAnalyzer:
+class DataAnalyzer(object):
     def __init__(self, compare_dict):
         # print(compare_dict)
         self.compare_dict = compare_dict

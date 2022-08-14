@@ -5,7 +5,7 @@ from pandas import DataFrame
 from pathlib import Path
 
 
-class SourceData:
+class SourceData(object):
     def __init__(self, path):
         self.path = path
 
@@ -34,7 +34,7 @@ class SourceDataJson(SourceData):
         return result
 
 
-class JsonObject:
+class JsonObject(object):
     measurements_dataframe = DataFrame()
 
     def __init__(self, data):
