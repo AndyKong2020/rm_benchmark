@@ -61,7 +61,6 @@ class ResultsProcessor(object):
                 continue
             with open(dataset_path, "r") as file:
                 dataset_coords = file.readlines()
-                index: int
                 for index in range(len(dataset_coords)):
                     dataset_coords[index] = [list(map(float, dataset_coords[index].split()[1:3])),
                                              list(map(float, dataset_coords[index].split()[3:5])),
@@ -69,7 +68,6 @@ class ResultsProcessor(object):
                                              list(map(float, dataset_coords[index].split()[7:9]))]
             with open(results_path, "r") as file:
                 results_coords = file.readlines()
-                index: int
                 for index in range(len(results_coords)):
                     results_coords[index] = [list(map(float, results_coords[index].split()[1:3])),
                                              list(map(float, results_coords[index].split()[3:5])),
