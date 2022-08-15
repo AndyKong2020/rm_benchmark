@@ -42,3 +42,4 @@ class JsonObject(object):
         for i in data:
             self.__dict__[i] = data[i]
         self.measurements_dataframe = DataFrame(self.measurements)
+

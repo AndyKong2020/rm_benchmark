@@ -4,6 +4,7 @@ import statistics
 
 import numpy as np
 from shapely.geometry import Polygon
+from pandas import DataFrame
 
 
 class MeasurementsProcessor(object):
@@ -37,6 +38,7 @@ class ResultsProcessor(object):
         self.result_not_found = 0
         detect_num_error = {}
         detect_coord_error = {}
+        magic_num = [-1]
 
         def cal_area_2poly(data1, data2):
             poly1 = Polygon(data1).convex_hull
@@ -96,23 +98,28 @@ class ResultsProcessor(object):
             # print(compare_array, len(results_coords), len(dataset_coords))
             for row in range(len(results_coords)):
                 for column in range(len(dataset_coords)):
-                    compare_array[row, column] = distance(results_coords[row], dataset_coords[column])
+                    compare_array[row, column] = cal_area_2poly(results_coords[row], dataset_coords[column]) / \
+                             (Polygon(dataset_coords[column]).convex_hull.area +
+                              Polygon(results_coords[row]).convex_hull.area -
+                              cal_area_2poly(results_coords[row], dataset_coords[column]))
             match = []
             # flag = 0
             # print(compare_array, 'a')
-            while compare_array.min() != 2:
-                min_index_tuple = divmod(np.argmin(compare_array), compare_array.shape[1])
-                # print(min_index_tuple)
-                match.append(min_index_tuple)
-                compare_array[min_index_tuple[0], :] = 2
-                compare_array[:, min_index_tuple[1]] = 2
+            while compare_array.max() != magic_num[0]:
+                max_index_tuple = divmod(np.argmax(compare_array), compare_array.shape[1])
+                # print(max_index_tuple)
+                match.append(max_index_tuple)
+                compare_array[max_index_tuple[0], :] = magic_num[0]
+                compare_array[:, max_index_tuple[1]] = magic_num[0]
                 # flag += 1
                 # print(flag)
-                # print(compare_array)
+                print(compare_array)
             for index_tuple in match:
                 # print(dataset_coords[index_tuple[1]])
                 cover_rate = cal_area_2poly(results_coords[index_tuple[0]], dataset_coords[index_tuple[1]]) / \
-                             Polygon(dataset_coords[index_tuple[1]]).convex_hull.area
+                             (Polygon(dataset_coords[index_tuple[1]]).convex_hull.area +
+                              Polygon(results_coords[index_tuple[0]]).convex_hull.area -
+                              cal_area_2poly(results_coords[index_tuple[0]], dataset_coords[index_tuple[1]]))
                 detect_coord_error[dataset_path_key].append(cover_rate)
         # print(detect_coord_error)
         return detect_coord_error
