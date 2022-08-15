@@ -48,9 +48,15 @@ class ResultsProcessor(object):
                 inter_area = poly1.intersection(poly2).area
             return inter_area
 
+        def intersection_divide_set(data1, data2):
+            set_area = cal_area_2poly(data1, data2)
+            proportion = set_area / (Polygon(data1).convex_hull.area +
+                                     Polygon(data2).convex_hull.area - set_area)
+            return proportion
+
         def distance(data1, data2):
-            return ((sum(data1[0][:]) / 4 - sum(data2[0][:]) / 4) ** 2 + (
-                    sum(data1[1][:]) / 4 - sum(data2[1][:]) / 4) ** 2) ** 0.5
+            return ((sum(data1[0][:]) / 4 - sum(data2[0][:]) / 4) ** 2 +
+                    (sum(data1[1][:]) / 4 - sum(data2[1][:]) / 4) ** 2) ** 0.5
 
         for dataset_path_key in self.dataset.keys():
             dataset_path = self.dataset[dataset_path_key]
@@ -97,10 +103,7 @@ class ResultsProcessor(object):
             # print(compare_array, len(results_coords), len(dataset_coords))
             for row in range(len(results_coords)):
                 for column in range(len(dataset_coords)):
-                    compare_array[row, column] = cal_area_2poly(results_coords[row], dataset_coords[column]) / \
-                             (Polygon(dataset_coords[column]).convex_hull.area +
-                              Polygon(results_coords[row]).convex_hull.area -
-                              cal_area_2poly(results_coords[row], dataset_coords[column]))
+                    compare_array[row, column] = intersection_divide_set(results_coords[row], dataset_coords[column])
             match = []
             # flag = 0
             # print(compare_array, 'a')
@@ -115,10 +118,7 @@ class ResultsProcessor(object):
                 # print(compare_array)
             for index_tuple in match:
                 # print(dataset_coords[index_tuple[1]])
-                cover_rate = cal_area_2poly(results_coords[index_tuple[0]], dataset_coords[index_tuple[1]]) / \
-                             (Polygon(dataset_coords[index_tuple[1]]).convex_hull.area +
-                              Polygon(results_coords[index_tuple[0]]).convex_hull.area -
-                              cal_area_2poly(results_coords[index_tuple[0]], dataset_coords[index_tuple[1]]))
+                cover_rate = intersection_divide_set(results_coords[index_tuple[0]], dataset_coords[index_tuple[1]])
                 detect_coord_error[dataset_path_key].append(cover_rate)
         # print(detect_coord_error)
         return detect_coord_error
