@@ -113,7 +113,7 @@ class ResultsProcessor(object):
                 compare_array[:, max_index_tuple[1]] = magic_num[0]
                 # flag += 1
                 # print(flag)
-                print(compare_array)
+                # print(compare_array)
             for index_tuple in match:
                 # print(dataset_coords[index_tuple[1]])
                 cover_rate = cal_area_2poly(results_coords[index_tuple[0]], dataset_coords[index_tuple[1]]) / \
