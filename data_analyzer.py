@@ -4,7 +4,6 @@ import statistics
 
 import numpy as np
 from shapely.geometry import Polygon
-from pandas import DataFrame
 
 
 class MeasurementsProcessor(object):
