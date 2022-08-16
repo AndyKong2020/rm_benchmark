@@ -47,7 +47,7 @@ def main():
               'target_stdev', analyzer.target_stdev(), '\n',
               'picture_variance', analyzer.picture_variance(), '\t',
               'target_variance', analyzer.target_variance(), '\n',
-              )
+              'result_not_found', process.result_not_found)
 
 
 if __name__ == '__main__':

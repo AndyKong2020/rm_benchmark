@@ -60,7 +60,7 @@ class ResultsProcessor(object):
 
         for dataset_path_key in self.dataset.keys():
             dataset_path = self.dataset[dataset_path_key]
-            results_path = self.results[dataset_path_key]
+            results_path = self.results.get(dataset_path_key)
             # print(dataset_path, results_path)
             if results_path is None:
                 self.result_not_found += 1
